@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <DisplayTiles msg="Welcome! to Your Vue.js App"/>
+    <DisplayTiles/>
   </div>
 </template>
 
