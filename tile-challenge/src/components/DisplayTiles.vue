@@ -7,6 +7,9 @@
       <h3>Seattle Listings</h3>
     </div>
     <hr />
+    <div>
+      <h4>{{ count }} RESULTS</h4>
+    </div>
     <div id="tiles">
       <div class="tile" v-for="property in properties" :key="property.id">
         <div class="house-img">
@@ -22,7 +25,7 @@
           <span>{{ property.headline }}</span>
         </div>
         <div class="prices">
-          <span>{{ getPriceRange(property.room_prices) }}</span>
+          <span><b>{{ getPriceRange(property.room_prices) }}</b></span>
         </div>
       </div>
     </div>
@@ -36,11 +39,12 @@ import moment from 'moment';
 export default {
   name: 'DisplayTiles',
   data() {
-    return { properties: [] };
+    return { properties: [], count: 0 };
   },
   mounted() {
     axios({ method: 'GET', url: 'https://stage-fieldstone.bungalow.com/api/v1/listings/properties/?market__slug=seattle' }).then((result) => {
       this.properties = result.data.results;
+      this.count = result.data.count;
     }, (error) => {
       console.error('Error getting property data', error);
     });
@@ -65,33 +69,52 @@ export default {
       if (max === min) {
         return `$${max.toString()}`;
       }
-      return `$${min.toString()}-${max.toString()}`;
+      return `$${min.toString()} - ${max.toString()}`;
     },
   },
 };
 </script>
 
 <style scoped>
+#tiles {
+  text-align: center;
+}
 .header {
   display: inline-block;
   width: 50%;
 }
 .tile {
   display: inline-block;
-  width:300px;
-  height:300px;
+  width: 300px;
+  height: 300px;
   margin: 10px 20px;
-  border-bottom:1px solid grey;
+  border-bottom: 1px solid grey;
+  text-align: left;
 }
 .house-img {
-  width: 275px;
-  height:200px;
+  height: 200px;
+  text-align: center;
+  width: 100%;
 }
 .house-img img{
-  max-width:100%;
-  max-height: 100%;
+  max-width: 100%;
+  height: 175px;
+}
+.headline {
+  height: 2em;
+  margin-top: 8px;
 }
 .availability span, .prices span {
-  font-size:13px;
+  font-size: 13px;
+}
+.availability {
+  display: inline;
+  background-color: aliceblue;
+  padding: 3px;
+  border: 1px solid gray;
+  border-radius: 5px;
+}
+.prices {
+  margin-top: 5px;
 }
 </style>
