@@ -117,4 +117,12 @@ export default {
 .prices {
   margin-top: 5px;
 }
+@media only screen and (max-width: 350px) {
+  h1 {
+    font-size: 22px;
+  }
+  h3 {
+    font-size: 16px;
+  }
+}
 </style>
